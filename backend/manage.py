@@ -33,8 +33,16 @@ def seed_db():
         db.drop_all()
         db.create_all()
 
-        # Genera datos de prueba para User
-        users = []
+        # Genera un usuario admin estático
+        admin_user = User(
+            username='admin',
+            email='admin@admin.com',
+            role='admin'
+        )
+        admin_user.set_password('admin123')
+
+        # Genera otros datos de prueba para User
+        users = [admin_user]  # Empezamos con el admin
         for _ in range(10):
             user = User(
                 username=fake.unique.ssn(),
