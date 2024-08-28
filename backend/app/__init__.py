@@ -3,6 +3,7 @@ from flask import Blueprint
 from flask import render_template, request
 import os
 
+from .main.controller.auth_controller import api as auth_ns
 from .main.controller.user_controller import api as user_ns
 from .main.controller.product_controller import api as product_ns
 from .main.controller.sale_header_controller import api as sale_header_ns
@@ -17,6 +18,7 @@ api = Api(blueprint,
           )
 
 # Exposición de los servicios al frontend
+api.add_namespace(auth_ns, path='/serv-auth')
 api.add_namespace(user_ns, path='/serv-user')
 api.add_namespace(product_ns, path='/serv-product')
 api.add_namespace(sale_header_ns, path='/serv-sale-header')

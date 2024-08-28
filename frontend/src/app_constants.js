@@ -1,6 +1,7 @@
 export const URI = process.env.VUE_APP_URI
 
 export const SERVICE_NAMES ={
+    AUTH: 'serv-auth',
     USER: 'serv-user',
     PRODUCT: 'serv-product',
     SALE_HEADER: 'serv-sale-header',
