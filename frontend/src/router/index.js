@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 const HomeView = () => import('../components/views/HomeView.vue')
 const ProductCreate = () => import('../components/views/ProductCreate.vue')
+const LoginView = () => import('../components/views/LoginView.vue')
 const NotFound = () => import('../components/shared/NotFound.vue')
 
 Vue.use(VueRouter)
@@ -9,6 +10,11 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    name: 'Login',
+    component: LoginView
+  },
+  {
+    path: '/home',
     name: 'home',
     component: HomeView
   },
