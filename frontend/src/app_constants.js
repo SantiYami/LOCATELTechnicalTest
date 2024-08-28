@@ -1,7 +1,10 @@
 export const URI = process.env.VUE_APP_URI
 
 export const SERVICE_NAMES ={
-    INVENTORY: 'inventory',
+    USER: 'user',
+    PRODUCT: 'product',
+    SALE_HEADER: 'sale-header',
+    SALE_DETAIL: 'sale-detail',
 }
 
 export const HTTP_STATUS = {
