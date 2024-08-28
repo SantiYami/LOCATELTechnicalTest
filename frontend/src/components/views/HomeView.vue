@@ -1,68 +1,77 @@
 <template>
     <div class="home">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">{{$t('inventory.name')}}</th>
-                    <th scope="col">{{$t('inventory.quantity')}}</th>
-                    <th scope="col">{{$t('inventory.price')}}</th>
-                    <th scope="col">{{$t('inventory.supplier')}}</th>
-                    <th scope="col">{{$t('inventory.action')}}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr scope="row" v-for="(product, index) in products" :key="index">
-                    <td >{{product.name}}</td>
-                    <td >{{product.quantity}}</td>
-                    <td >{{product.price}}</td>
-                    <td >{{product.supplier}}</td>
-                    <td>
-                        <b-button @click="$router.push({name: 'product', params: {idProduct: product.id_product}})">
-                            {{$t('inventory.edit')}}
-                        </b-button> 
-                        <b-button @click="deleteProduct(product.id_product)" variant="secondary">
-                            {{$t('inventory.delete')}}
-                        </b-button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <b-container>
+            <b-row class="mb-3">
+                <b-col>
+                    <b-button @click="navigateTo('create-client')" variant="primary">Crear Cliente</b-button>
+                    <b-button @click="navigateTo('create-product')" variant="secondary">Crear Producto</b-button>
+                    <b-button @click="navigateTo('create-sale-header')" variant="success">Registrar Cabecera Venta</b-button>
+                    <b-button @click="navigateTo('create-sale-detail')" variant="danger">Registrar Detalle Venta</b-button>
+                </b-col>
+            </b-row>
 
+            <b-row>
+                <b-col>
+                    <b-card title="Listado de Ventas Realizadas por Fecha">
+                        <b-table :items="sales" :fields="fields" striped hover>
+                            <template #cell(date)="data">
+                                {{ formatDate(data.value) }}
+                            </template>
+                            <template #cell(total_sale)="data">
+                                {{ formatCurrency(data.value) }}
+                            </template>
+                        </b-table>
+                    </b-card>
+                </b-col>
+            </b-row>
+        </b-container>
     </div>
 </template>
 
 <script>
 import VAPI from '@/http_common';
 import { HTTP_STATUS, SERVICE_NAMES } from "@/app_constants";
+
 export default {
-    name: 'HomeView',
     data() {
         return {
-            products: [],
+            sales: [],
+            fields: [
+                { key: 'consecutive', label: 'Consecutivo' },
+                { key: 'date', label: 'Fecha' },
+                { key: 'total_sale', label: 'Total Venta' }
+            ]
         };
     },
-    mounted() {
-        this.getAllProducts();
-    },
     methods: {
-        async getAllProducts() {
+        async fetchSales() {
             try {
-                let response = await VAPI.get(`${SERVICE_NAMES.PRODUCT}/products`)
-                if(response.status == HTTP_STATUS.OK){
-                    this.products = response.data
+                const response = await VAPI.get(`${SERVICE_NAMES.SALE_HEADER}/sales`);
+                if (response.status === HTTP_STATUS.OK) {
+                    this.sales = response.data;
                 }
             } catch (error) {
-                console.error(error)
+                console.error(error);
             }
         },
-        deleteProduct(idProduct){
-            console.log(idProduct)
-            // TODO
+        formatDate(date) {
+            return new Date(date).toLocaleDateString();
+        },
+        formatCurrency(value) {
+            return `$${parseFloat(value).toFixed(2)}`;
+        },
+        navigateTo(route) {
+            this.$router.push({ name: route });
         }
     },
-}
+    mounted() {
+        this.fetchSales();
+    }
+};
 </script>
 
-<style lang="scss" scoped>
-    
+<style scoped>
+.home {
+    margin-top: 20px;
+}
 </style>
