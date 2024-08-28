@@ -17,10 +17,10 @@ api = Api(blueprint,
           )
 
 # Exposición de los servicios al frontend
-api.add_namespace(user_ns, path='/user')
-api.add_namespace(product_ns, path='/product')
-api.add_namespace(sale_header_ns, path='/sale-header')
-api.add_namespace(sale_detail_ns, path='/sale-detail')
+api.add_namespace(user_ns, path='/serv-user')
+api.add_namespace(product_ns, path='/serv-product')
+api.add_namespace(sale_header_ns, path='/serv-sale-header')
+api.add_namespace(sale_detail_ns, path='/serv-sale-detail')
 
 @blueprint.route('/')
 def home():
