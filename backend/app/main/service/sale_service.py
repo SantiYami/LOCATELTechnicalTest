@@ -5,13 +5,14 @@ from ..model.sale_detail import SaleDetail
 import logging
 import traceback
 
+
 def create_sale(data):
     try:
         new_sale = Sale(
-            consecutive=data['consecutive'],
-            date=data['date'],
-            id_user=data['id_user'],
-            total_sale=data['total_sale']
+            consecutive=data["consecutive"],
+            date=data["date"],
+            id_user=data["id_user"],
+            total_sale=data["total_sale"],
         )
         db.session.add(new_sale)
         db.session.commit()
@@ -26,6 +27,7 @@ def create_sale(data):
     finally:
         db.session.close()
 
+
 def get_sales():
     try:
         sales = Sale.query.all()
@@ -35,8 +37,9 @@ def get_sales():
                 "consecutive": sale.consecutive,
                 "date": sale.date,
                 "id_user": sale.id_user,
-                "total_sale": str(sale.total_sale)  # Convertir a cadena para JSON
-            } for sale in sales
+                "total_sale": str(sale.total_sale),  # Convertir a cadena para JSON
+            }
+            for sale in sales
         ]
         return sales_data, 200
     except Exception as e:
@@ -49,6 +52,7 @@ def get_sales():
     finally:
         db.session.close()
 
+
 def get_sale(id):
     try:
         sale = Sale.query.filter_by(id_sale=id).first()
@@ -59,7 +63,7 @@ def get_sale(id):
             "consecutive": sale.consecutive,
             "date": sale.date,
             "id_user": sale.id_user,
-            "total_sale": str(sale.total_sale)  # Convertir a cadena para JSON
+            "total_sale": str(sale.total_sale),  # Convertir a cadena para JSON
         }
         return sale_data, 200
     except Exception as e:
@@ -72,6 +76,7 @@ def get_sale(id):
     finally:
         db.session.close()
 
+
 def get_sales_by_date(start_date, end_date):
     try:
         sales = Sale.query.filter(Sale.date.between(start_date, end_date)).all()
@@ -81,8 +86,9 @@ def get_sales_by_date(start_date, end_date):
                 "consecutive": sale.consecutive,
                 "date": sale.date,
                 "id_user": sale.id_user,
-                "total_sale": str(sale.total_sale)  # Convertir a cadena para JSON
-            } for sale in sales
+                "total_sale": str(sale.total_sale),  # Convertir a cadena para JSON
+            }
+            for sale in sales
         ]
         return sales_data, 200
     except Exception as e:
@@ -95,13 +101,14 @@ def get_sales_by_date(start_date, end_date):
     finally:
         db.session.close()
 
+
 def create_sale_detail(data):
     try:
         new_sale_detail = SaleDetail(
-            sale_id=data['sale_id'],
-            product_id=data['product_id'],
-            product_value=data['product_value'],
-            calculated_iva=data['calculated_iva']
+            sale_id=data["sale_id"],
+            product_id=data["product_id"],
+            product_value=data["product_value"],
+            calculated_iva=data["calculated_iva"],
         )
         db.session.add(new_sale_detail)
         db.session.commit()
@@ -116,6 +123,7 @@ def create_sale_detail(data):
     finally:
         db.session.close()
 
+
 def get_sale_detail(id):
     try:
         sale_detail = SaleDetail.query.filter_by(id_detail=id).first()
@@ -125,8 +133,12 @@ def get_sale_detail(id):
             "id": sale_detail.id_detail,
             "sale_id": sale_detail.sale_id,
             "product_id": sale_detail.product_id,
-            "product_value": str(sale_detail.product_value),  # Convertir a cadena para JSON
-            "calculated_iva": str(sale_detail.calculated_iva)  # Convertir a cadena para JSON
+            "product_value": str(
+                sale_detail.product_value
+            ),  # Convertir a cadena para JSON
+            "calculated_iva": str(
+                sale_detail.calculated_iva
+            ),  # Convertir a cadena para JSON
         }
         return sale_detail_data, 200
     except Exception as e:
@@ -139,6 +151,7 @@ def get_sale_detail(id):
     finally:
         db.session.close()
 
+
 def get_sale_details_by_sale_id(sale_id):
     try:
         sale_details = SaleDetail.query.filter_by(sale_id=sale_id).all()
@@ -147,9 +160,14 @@ def get_sale_details_by_sale_id(sale_id):
                 "id": detail.id_detail,
                 "sale_id": detail.sale_id,
                 "product_id": detail.product_id,
-                "product_value": str(detail.product_value),  # Convertir a cadena para JSON
-                "calculated_iva": str(detail.calculated_iva)  # Convertir a cadena para JSON
-            } for detail in sale_details
+                "product_value": str(
+                    detail.product_value
+                ),  # Convertir a cadena para JSON
+                "calculated_iva": str(
+                    detail.calculated_iva
+                ),  # Convertir a cadena para JSON
+            }
+            for detail in sale_details
         ]
         return details_data, 200
     except Exception as e:
