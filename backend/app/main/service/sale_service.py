@@ -11,7 +11,7 @@ def create_sale(data):
         new_sale = Sale(
             consecutive=data['consecutive'],
             date=data['date'],
-            client_id=data['client_id'],
+            id_user=data['id_user'],
             total_sale=data['total_sale']
         )
         db.session.add(new_sale)
@@ -35,7 +35,7 @@ def get_sales():
                 "id": sale.id_sale,
                 "consecutive": sale.consecutive,
                 "date": sale.date,
-                "client_id": sale.client_id,
+                "id_user": sale.id_user,
                 "total_sale": str(sale.total_sale)  # Convertir a cadena para JSON
             } for sale in sales
         ]
@@ -57,7 +57,7 @@ def get_sale(id):
             "id": sale.id_sale,
             "consecutive": sale.consecutive,
             "date": sale.date,
-            "client_id": sale.client_id,
+            "id_user": sale.id_user,
             "total_sale": str(sale.total_sale)  # Convertir a cadena para JSON
         }
         return jsonify(sale_data), 200
@@ -79,7 +79,7 @@ def get_sales_by_date(start_date, end_date):
                 "id": sale.id_sale,
                 "consecutive": sale.consecutive,
                 "date": sale.date,
-                "client_id": sale.client_id,
+                "id_user": sale.id_user,
                 "total_sale": str(sale.total_sale)  # Convertir a cadena para JSON
             } for sale in sales
         ]

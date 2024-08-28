@@ -23,8 +23,8 @@ class ClientResource(Resource):
         """
         Obtiene los detalles de un cliente por su ID.
         """
-        client_id = request.args.get("id")
-        response, status = get_client(client_id)
+        id_user = request.args.get("id")
+        response, status = get_client(id_user)
         return response, status
 
 @api.route('/clients/<int:id>')

@@ -6,7 +6,7 @@ class SaleDto:
     sale_header_model = api.model('SaleHeader', {
         'consecutive': fields.String(required=True, description='Número consecutivo de la venta'),
         'date': fields.DateTime(required=True, description='Fecha de la venta'),
-        'client_id': fields.Integer(required=True, description='ID del cliente que realizó la compra'),
+        'id_user': fields.Integer(required=True, description='ID del cliente que realizó la compra'),
         'total_sale': fields.Float(required=True, description='Monto total de la venta')
     })
 

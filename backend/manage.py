@@ -3,7 +3,15 @@ import unittest
 from flask.cli import FlaskGroup
 from app import blueprint
 from app.main import create_app, db
-from app.main.model import product, supplier
+from app.main.model import (
+    user,
+    client_detail,
+    product,
+    sale,
+    sale_detail,
+    session 
+)
+
 import logging
 
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
@@ -15,6 +23,10 @@ app.app_context().push()
 
 cli = FlaskGroup(app)
 
+# Crear tablas si no existen
+with app.app_context():
+    db.create_all()
+    print("Tablas creadas correctamente.")
 
 @cli.command()
 def run():
