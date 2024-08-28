@@ -1,14 +1,12 @@
-
 from .. import db
-from .supplier import Supplier
 
 class Product(db.Model):
     __tablename__ = 'product'
+    __table_args__ = {'comment': 'Tabla que almacena los datos de los productos'}
 
-    id_product = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text, nullable=False)
-    quantity = db.Column(db.Integer, nullable=False)
-    price_unit = db.Column(db.Numeric, nullable=False)
-    id_supplier = db.Column(db.ForeignKey('supplier.id_supplier'), nullable=False)
-
-    supplier = db.relationship('Supplier', primaryjoin='Product.id_supplier == Supplier.id_supplier', backref='products')
+    id_product = db.Column(db.Integer, primary_key=True, autoincrement=True, info={'comment': 'Identificador único del producto'})
+    code = db.Column(db.String(30), nullable=False, unique=True, info={'comment': 'Código del producto'})
+    name = db.Column(db.String(100), nullable=False, info={'comment': 'Nombre del producto'})
+    sale_value = db.Column(db.Numeric(10, 2), nullable=False, info={'comment': 'Valor de venta del producto'})
+    handles_iva = db.Column(db.Boolean, nullable=False, default=False, info={'comment': 'Indicador si el producto maneja IVA'})
+    iva_percentage = db.Column(db.Numeric(5, 2), nullable=True, info={'comment': 'Porcentaje de IVA aplicable si maneja IVA'})
