@@ -2,7 +2,7 @@
   <div id="app">
     <nav>
       <img alt="Vue logo" src="@/assets/logo.png"/>
-      <router-link to="/">{{$t('inventory.products')}}</router-link>
+      <router-link to="/">{{$t('login.title')}}</router-link>
     </nav>
     <router-view/>
   </div>
