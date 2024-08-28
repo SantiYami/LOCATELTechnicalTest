@@ -3,7 +3,10 @@ from flask import Blueprint
 from flask import render_template, request
 import os
 
-from .main.controller.inventory_controller import api as inventory_ns
+from .main.controller.user_controller import api as user_ns
+from .main.controller.product_controller import api as product_ns
+from .main.controller.sale_header_controller import api as sale_header_ns
+from .main.controller.sale_detail_controller import api as sale_detail_ns
 
 blueprint = Blueprint('api', __name__, static_folder='../templates/dist/static' , template_folder='../template')
 
@@ -13,7 +16,11 @@ api = Api(blueprint,
           description='flask restplus web service'
           )
 
-api.add_namespace(inventory_ns, path='/inventory')
+# Exposición de los servicios al frontend
+api.add_namespace(user_ns, path='/user')
+api.add_namespace(product_ns, path='/product')
+api.add_namespace(sale_header_ns, path='/sale-header')
+api.add_namespace(sale_detail_ns, path='/sale-detail')
 
 @blueprint.route('/')
 def home():
