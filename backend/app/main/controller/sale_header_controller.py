@@ -1,12 +1,12 @@
 from flask_restx import Resource
 from flask import request
-from ..service.sale_service import create_sale, get_sale, get_sales_by_date
+from ..service.sale_service import create_sale, get_sale, get_sales, get_sales_by_date
 from ..dto.sale_dto import SaleDto
 
 api = SaleDto.api
 sale_header_model = SaleDto.sale_header_model
 
-@api.route('/sales')
+@api.route('/sale')
 class SaleResource(Resource):
     @api.expect(sale_header_model)
     def post(self):
@@ -24,6 +24,16 @@ class SaleResource(Resource):
         """
         sale_id = request.args.get("id")
         response, status = get_sale(sale_id)
+        return response, status
+
+@api.route('/sales')
+class SalesResource(Resource):
+    def get(self):
+        """
+        Obtiene un listado de ventas realizadas.
+        """
+        
+        response, status = get_sales()
         return response, status
 
 @api.route('/sales/date')
