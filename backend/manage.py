@@ -90,7 +90,7 @@ def seed_db():
             sale = Sale(
                 consecutive=fake.unique.uuid4(),
                 date=fake.date_time_between(start_date='-1y', end_date='now'),
-                user_id=fake.random_element(elements=[user.id_user for user in users]),
+                id_user=fake.random_element(elements=[user.id_user for user in users]),
                 total_sale=str(fake.pydecimal(left_digits=5, right_digits=2, positive=True))  # Convertir a cadena
             )
             sales.append(sale)
