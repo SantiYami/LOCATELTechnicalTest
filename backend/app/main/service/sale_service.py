@@ -35,7 +35,7 @@ def get_sales():
             {
                 "id": sale.id_sale,
                 "consecutive": sale.consecutive,
-                "date": sale.date,
+                "date": str(sale.date),
                 "id_user": sale.id_user,
                 "total_sale": str(sale.total_sale),  # Convertir a cadena para JSON
             }
@@ -61,7 +61,7 @@ def get_sale(id):
         sale_data = {
             "id": sale.id_sale,
             "consecutive": sale.consecutive,
-            "date": sale.date,
+            "date": str(sale.date),
             "id_user": sale.id_user,
             "total_sale": str(sale.total_sale),  # Convertir a cadena para JSON
         }
@@ -84,7 +84,7 @@ def get_sales_by_date(start_date, end_date):
             {
                 "id": sale.id_sale,
                 "consecutive": sale.consecutive,
-                "date": sale.date,
+                "date": str(sale.date),
                 "id_user": sale.id_user,
                 "total_sale": str(sale.total_sale),  # Convertir a cadena para JSON
             }
