@@ -53,13 +53,19 @@ Activar modo DEBUG:
 - Windows CMD: `set FLASK_DEBUG=1`
 - Linux/Mac: `export FLASK_DEBUG=1`
 
-### 4. Ejecutar Pruebas
+### 4. Poblar base de datos
+
+```bash
+flask seed-db
+```
+
+### 5. Ejecutar Pruebas
 
 ```bash
 flask test
 ```
 
-### 5. Iniciar la Aplicación
+### 6. Iniciar la Aplicación
 
 ```bash
 flask run
