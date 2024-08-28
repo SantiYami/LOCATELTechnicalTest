@@ -1,12 +1,22 @@
 from flask_restx import Resource
 from flask import request
-from ..service.product_service import create_product, get_product, update_product, delete_product
+from ..service.product_service import create_product, get_products, get_product, update_product, delete_product
 from ..dto.product_dto import ProductDto
 
 api = ProductDto.api
 product_model = ProductDto.product_model
 
 @api.route('/products')
+class ProductsResource(Resource):
+    
+    def get(self):
+        """
+        Obtiene los detalles de los productos.
+        """
+        response, status = get_products()
+        return response, status
+
+@api.route('/product')
 class ProductResource(Resource):
     @api.expect(product_model)
     def post(self):
@@ -26,7 +36,7 @@ class ProductResource(Resource):
         response, status = get_product(code)
         return response, status
 
-@api.route('/products/<string:code>')
+@api.route('/product/<string:code>')
 class ProductDetailResource(Resource):
     @api.expect(product_model)
     def put(self, code):
