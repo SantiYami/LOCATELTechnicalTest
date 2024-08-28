@@ -1,6 +1,5 @@
 from .. import db
 from ..model.user import User
-from flask import jsonify
 
 import logging
 import traceback
@@ -42,7 +41,7 @@ def get_clients():
                 "email": client.email
             } for client in clients
         ]
-        return jsonify(clients_data), 200
+        return clients_data, 200
     except Exception as e:
         logging.error(e)
         logging.error(traceback.format_exc())
@@ -55,7 +54,9 @@ def get_clients():
 
 def get_client(id):
     try:
-        client = User.query.filter_by(id_user=id, role='client').first_or_404()
+        client = User.query.filter_by(id_user=id, role='client').first()
+        if not client:
+            return {"message": "No se encontró el cliente"}, 204
         client_data = {
             "id": client.id_user,
             "document_id": client.username,
@@ -64,7 +65,7 @@ def get_client(id):
             "phone": client.phone,
             "email": client.email
         }
-        return jsonify(client_data), 200
+        return client_data, 200
     except Exception as e:
         logging.error(e)
         logging.error(traceback.format_exc())
@@ -77,7 +78,9 @@ def get_client(id):
 
 def update_client(id, data):
     try:
-        client = User.query.filter_by(id_user=id, role='client').first_or_404()
+        client = User.query.filter_by(id_user=id, role='client').first()
+        if not client:
+            return {"message": "No se encontró el cliente"}, 204
         client.name = data.get('name', client.name)
         client.address = data.get('address', client.address)
         client.phone = data.get('phone', client.phone)
@@ -96,7 +99,9 @@ def update_client(id, data):
 
 def delete_client(id):
     try:
-        client = User.query.filter_by(id_user=id, role='client').first_or_404()
+        client = User.query.filter_by(id_user=id, role='client').first()
+        if not client:
+            return {"message": "No se encontró el cliente"}, 204
         db.session.delete(client)
         db.session.commit()
         return {"message": "Client deleted successfully"}, 200

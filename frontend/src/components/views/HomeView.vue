@@ -8,22 +8,22 @@
                     <th scope="col">{{$t('inventory.price')}}</th>
                     <th scope="col">{{$t('inventory.supplier')}}</th>
                     <th scope="col">{{$t('inventory.action')}}</th>
-                  </tr>
+                </tr>
             </thead>
             <tbody>
                 <tr scope="row" v-for="(product, index) in products" :key="index">
-                  <td >{{product.name}}</td>
-                  <td >{{product.quantity}}</td>
-                  <td >{{product.price}}</td>
-                  <td >{{product.supplier}}</td>
-                  <td>
-                    <b-button @click="$router.push({name: 'product', params: {idProduct: product.id_product}})">
-                        {{$t('inventory.edit')}}
-                    </b-button> 
-                    <b-button @click="deleteProduct(product.id_product)" variant="secondary">
-                        {{$t('inventory.delete')}}
-                    </b-button>
-                  </td>
+                    <td >{{product.name}}</td>
+                    <td >{{product.quantity}}</td>
+                    <td >{{product.price}}</td>
+                    <td >{{product.supplier}}</td>
+                    <td>
+                        <b-button @click="$router.push({name: 'product', params: {idProduct: product.id_product}})">
+                            {{$t('inventory.edit')}}
+                        </b-button> 
+                        <b-button @click="deleteProduct(product.id_product)" variant="secondary">
+                            {{$t('inventory.delete')}}
+                        </b-button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -37,9 +37,9 @@ import { HTTP_STATUS, SERVICE_NAMES } from "@/app_constants";
 export default {
     name: 'HomeView',
     data() {
-      return {
-        products: [],
-      };
+        return {
+            products: [],
+        };
     },
     mounted() {
         this.getAllProducts();
@@ -47,7 +47,7 @@ export default {
     methods: {
         async getAllProducts() {
             try {
-                let response = await VAPI.get(`${SERVICE_NAMES.INVENTORY}/get-all`)
+                let response = await VAPI.get(`${SERVICE_NAMES.PRODUCT}/products`)
                 if(response.status == HTTP_STATUS.OK){
                     this.products = response.data
                 }

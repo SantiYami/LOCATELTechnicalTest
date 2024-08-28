@@ -1,6 +1,5 @@
 from .. import db
 from ..model.product import Product
-from flask import jsonify
 
 import logging
 import traceback
@@ -40,7 +39,7 @@ def get_products():
                 "iva_percentage": product.iva_percentage
             } for product in products
         ]
-        return jsonify(products_data), 200
+        return products_data, 200
     except Exception as e:
         logging.error(e)
         logging.error(traceback.format_exc())
@@ -53,7 +52,9 @@ def get_products():
 
 def get_product(id):
     try:
-        product = Product.query.filter_by(id_product=id).first_or_404()
+        product = Product.query.filter_by(id_product=id).first()
+        if not product:
+            return {"message": "No se encontró el producto"}, 204
         product_data = {
             "id": product.id_product,
             "code": product.code,
@@ -62,7 +63,7 @@ def get_product(id):
             "handles_iva": product.handles_iva,
             "iva_percentage": product.iva_percentage
         }
-        return jsonify(product_data), 200
+        return product_data, 200
     except Exception as e:
         logging.error(e)
         logging.error(traceback.format_exc())
@@ -75,7 +76,9 @@ def get_product(id):
 
 def update_product(id, data):
     try:
-        product = Product.query.filter_by(id_product=id).first_or_404()
+        product = Product.query.filter_by(id_product=id).first()
+        if not product:
+            return {"message": "No se encontró el producto"}, 204
         product.name = data.get('name', product.name)
         product.sale_value = data.get('sale_value', product.sale_value)
         product.handles_iva = data.get('handles_iva', product.handles_iva)
@@ -94,7 +97,9 @@ def update_product(id, data):
 
 def delete_product(id):
     try:
-        product = Product.query.filter_by(id_product=id).first_or_404()
+        product = Product.query.filter_by(id_product=id).first()
+        if not product:
+            return {"message": "No se encontró el producto"}, 204
         db.session.delete(product)
         db.session.commit()
         return {"message": "Product deleted successfully"}, 200

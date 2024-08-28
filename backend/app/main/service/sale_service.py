@@ -1,7 +1,6 @@
 from .. import db
 from ..model.sale import Sale
 from ..model.sale_detail import SaleDetail
-from flask import jsonify
 
 import logging
 import traceback
@@ -39,7 +38,7 @@ def get_sales():
                 "total_sale": str(sale.total_sale)  # Convertir a cadena para JSON
             } for sale in sales
         ]
-        return jsonify(sales_data), 200
+        return sales_data, 200
     except Exception as e:
         logging.error(e)
         logging.error(traceback.format_exc())
@@ -52,7 +51,9 @@ def get_sales():
 
 def get_sale(id):
     try:
-        sale = Sale.query.filter_by(id_sale=id).first_or_404()
+        sale = Sale.query.filter_by(id_sale=id).first()
+        if not sale:
+            return {"message": "No se encontró el la venta"}, 204
         sale_data = {
             "id": sale.id_sale,
             "consecutive": sale.consecutive,
@@ -60,7 +61,7 @@ def get_sale(id):
             "id_user": sale.id_user,
             "total_sale": str(sale.total_sale)  # Convertir a cadena para JSON
         }
-        return jsonify(sale_data), 200
+        return sale_data, 200
     except Exception as e:
         logging.error(e)
         logging.error(traceback.format_exc())
@@ -83,7 +84,7 @@ def get_sales_by_date(start_date, end_date):
                 "total_sale": str(sale.total_sale)  # Convertir a cadena para JSON
             } for sale in sales
         ]
-        return jsonify(sales_data), 200
+        return sales_data, 200
     except Exception as e:
         logging.error(e)
         logging.error(traceback.format_exc())
@@ -117,7 +118,9 @@ def create_sale_detail(data):
 
 def get_sale_detail(id):
     try:
-        sale_detail = SaleDetail.query.filter_by(id_detail=id).first_or_404()
+        sale_detail = SaleDetail.query.filter_by(id_detail=id).first()
+        if not sale_detail:
+            return {"message": "No se encontró el detalle de la venta"}, 204
         sale_detail_data = {
             "id": sale_detail.id_detail,
             "sale_id": sale_detail.sale_id,
@@ -125,7 +128,7 @@ def get_sale_detail(id):
             "product_value": str(sale_detail.product_value),  # Convertir a cadena para JSON
             "calculated_iva": str(sale_detail.calculated_iva)  # Convertir a cadena para JSON
         }
-        return jsonify(sale_detail_data), 200
+        return sale_detail_data, 200
     except Exception as e:
         logging.error(e)
         logging.error(traceback.format_exc())
@@ -148,7 +151,7 @@ def get_sale_details_by_sale_id(sale_id):
                 "calculated_iva": str(detail.calculated_iva)  # Convertir a cadena para JSON
             } for detail in sale_details
         ]
-        return jsonify(details_data), 200
+        return details_data, 200
     except Exception as e:
         logging.error(e)
         logging.error(traceback.format_exc())
