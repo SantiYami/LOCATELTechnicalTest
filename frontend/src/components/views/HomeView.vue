@@ -46,7 +46,7 @@ export default {
     methods: {
         async fetchSales() {
             try {
-                const response = await VAPI.get(`${SERVICE_NAMES.SALE_HEADER}/sale`);
+                const response = await VAPI.get(`${SERVICE_NAMES.SALE_HEADER}/sales`);
                 if (response.status === HTTP_STATUS.OK) {
                     this.sales = response.data;
                 }
