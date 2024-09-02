@@ -77,7 +77,7 @@ export default {
     methods: {
         async handleSubmit() {
         try {
-            const response = await VAPI.post(`${SERVICE_NAMES.PRODUCT}/products`, this.product);
+            const response = await VAPI.post(`${SERVICE_NAMES.PRODUCT}/product`, this.product);
             if (response.status === HTTP_STATUS.CREATED) {
                 this.$toast.success('Producto creado exitosamente');
                 this.$router.push('/');

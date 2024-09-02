@@ -13,6 +13,14 @@
                     ></b-form-input>
                     </b-form-group>
     
+                    <b-form-group label="Número de documento:" label-for="document_id">
+                    <b-form-input
+                        id="document_id"
+                        v-model="client.document_id"
+                        required
+                    ></b-form-input>
+                    </b-form-group>
+    
                     <b-form-group label="Dirección:" label-for="address">
                     <b-form-input
                         id="address"
@@ -67,6 +75,7 @@ export default {
         return {
         client: {
             name: '',
+            document_id: '',
             address: '',
             phone: '',
             email: '',
